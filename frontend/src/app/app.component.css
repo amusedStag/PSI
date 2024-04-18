@@ -1,0 +1,39 @@
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+  font-family: 'Roboto', sans-serif;
+  /*color: rgba(0, 0, 0, 0.87);*/
+  color: black;
+  font-size: 1.5rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-decoration: none;
+  max-width: 200px;
+  margin: 10px;
+  background-color: #e0e0e0;
+  color: #212121;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  color: #FFFFFF;
+  background-color: #c81c5c;
+}
+
+nav a:active {
+  background-color: #C2185B;
+}
