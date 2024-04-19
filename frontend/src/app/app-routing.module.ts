@@ -5,9 +5,9 @@ import {WebsiteAddComponent} from "./websiteadd/websiteadd.component";
 import {WebsiteListComponent} from "./websitelist/websitelist.component";
 
 const routes: Routes = [
-  { path: '' , redirectTo: '/homepage', pathMatch: 'full' },
-  { path: 'homepage', component: HomepageComponent },
-  { path: 'websiteadd', component: WebsiteAddComponent },
+  { path: '' , redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomepageComponent },
+  { path: 'addwebsite', component: WebsiteAddComponent },
   { path: 'websitelist', component: WebsiteListComponent }
 ];
 

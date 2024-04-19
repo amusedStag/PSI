@@ -15,21 +15,50 @@
   <button type="submit" class="btn btn-primary" [disabled]="websiteForm.invalid">Add Website</button>
 </form>-->
 
+<!--<div class="center-container">-->
+<!--  <h1>Add Website</h1>-->
+<!--  <form [formGroup]="websiteForm" (ngSubmit)="addWebsite()">-->
+<!--    <mat-form-field appearance="fill">-->
+<!--      <mat-label>Website URL</mat-label>-->
+<!--      <input matInput type="text" id="url" formControlName="url">-->
+<!--      <mat-error *ngIf="websiteForm.get('url')?.invalid && websiteForm.get('url')?.touched">-->
+<!--        <div *ngIf="websiteForm.get('url')?.errors?.['required']">-->
+<!--          Website URL is required-->
+<!--        </div>-->
+<!--        <div *ngIf="websiteForm.get('url')?.errors?.['pattern']">-->
+<!--          Please enter a valid URL (e.g., http(s)://wwww.example.com or wwww.example.com)-->
+<!--        </div>-->
+<!--      </mat-error>-->
+<!--    </mat-form-field>-->
+<!--    <button mat-raised-button color="primary" type="submit" [disabled]="websiteForm.invalid">Submit</button>-->
+<!--  </form>-->
+<!--  <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>-->
+<!--</div>-->
+
 <div class="center-container">
   <h1>Add Website</h1>
-  <form [formGroup]="websiteForm" (ngSubmit)="addWebsite()">
-    <mat-form-field appearance="fill">
-      <mat-label>Website URL</mat-label>
-      <input matInput type="text" id="url" formControlName="url">
-      <mat-error *ngIf="websiteForm.get('url')?.invalid && websiteForm.get('url')?.touched">
-        <div *ngIf="websiteForm.get('url')?.errors?.['required']">
-          Website URL is required
-        </div>
-        <div *ngIf="websiteForm.get('url')?.errors?.['pattern']">
-          Please enter a valid URL (e.g., http://example.com)
-        </div>
-      </mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="websiteForm.invalid">Submit</button>
-  </form>
+  <div class="form-container">
+    <form [formGroup]="websiteForm" (ngSubmit)="addWebsite()">
+      <div class="input-field">
+        <mat-form-field appearance="fill">
+          <mat-label>Website URL</mat-label>
+          <input matInput type="text" id="url" formControlName="url">
+          <mat-error *ngIf="websiteForm.get('url')?.invalid && websiteForm.get('url')?.touched">
+            <div *ngIf="websiteForm.get('url')?.errors?.['required']">
+              Website URL is required
+            </div>
+            <div *ngIf="websiteForm.get('url')?.errors?.['pattern']">
+              Please enter a valid URL (e.g., http://example.com)
+            </div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="submit-button">
+        <button mat-raised-button color="primary" type="submit" [disabled]="websiteForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="center-text">
+  <p class="mat-body-1" *ngIf="successMessage">{{ successMessage }}</p>
 </div>

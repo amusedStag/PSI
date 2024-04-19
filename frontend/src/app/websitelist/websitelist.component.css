@@ -1,0 +1,23 @@
+.table-container {
+  width: 80%;
+  margin: auto;
+}
+
+table {
+  background-color: #c81c5c; /* Change this to your desired table color */
+  color: white; /* Change this to your desired text color */
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.filter {
+  width: 10%;
+  margin: 15px auto;
+}

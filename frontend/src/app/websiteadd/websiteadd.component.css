@@ -1,7 +1,63 @@
+/*.center-container {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  height: 50vh;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*button {*/
+/*  margin-top: 20px; !* Adjust this value as needed *!*/
+/*}*/
+
+/*::ng-deep .mat-input-element {*/
+/*  background-color: transparent; !* This will remove the gray background *!*/
+/*  color: black; !* This will make the input text black *!*/
+/*}*/
+
+/*.success-message {*/
+/*  margin-top: 50px;*/
+/*}*/
+
 .center-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50vh;
   flex-direction: column;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+}
+
+.submit-button {
+  margin-top: 10px; /* Adjust this value to change the distance of the button from the input field */
+  text-align: center; /* This will center the button */
+}
+
+::ng-deep .mat-raised-button {
+  padding: 12px 24px; /* Increase padding to make the button larger */
+  font-size: 16px; /* Increase font size to make the button text larger */
+}
+
+::ng-deep .mat-input-element {
+  background-color: transparent;
+  color: black;
+}
+
+.success-message {
+  margin-top: 50px;
+}
+
+.center-text {
+  text-align: center;
+  color: green;
 }

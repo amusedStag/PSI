@@ -8,23 +8,27 @@ import { Router } from '@angular/router';
   templateUrl: './websiteadd.component.html',
   styleUrls: ['./websiteadd.component.css'],
 })
-export class WebsiteAddComponent implements OnInit {
-  websiteForm!: FormGroup;
+export class WebsiteAddComponent {
+  websiteForm: FormGroup;
+  successMessage: string | null = null;
+  //'^((http|https)://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?$' old regex
 
-  constructor(private formBuilder: FormBuilder, /*private websiteService: WebsiteService,*/ private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder, /*private websiteService: WebsiteService,*/ private router: Router) {
     this.websiteForm = this.formBuilder.group({
-      url: ['', [Validators.required, Validators.pattern('^((http|https)://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?$')]]
+      url: ['', [Validators.required, Validators.pattern('^((http|https)://)?www\\.[\\w-]+\\.[a-z]{2,}$')]]
     });
   }
 
   addWebsite(): void {
-    // if (this.websiteForm.valid) {
-    //   const url = this.websiteForm.value.url.trim();
-    //   this.websiteService.addWebsite(url).subscribe(() => {
-    //     this.router.navigate(['/website/list']);
-    //   });
-    // }
+    this.successMessage = '';
+    if (this.websiteForm.valid) {
+      const url = this.websiteForm.value.url.trim();
+      // this.websiteService.addWebsite(url).subscribe(() => {
+      //   this.router.navigate(['/website/list']);
+      // });
+      console.log(url);
+      this.websiteForm.reset();
+      this.successMessage = 'Website added successfully';
+    }
   }
 }
