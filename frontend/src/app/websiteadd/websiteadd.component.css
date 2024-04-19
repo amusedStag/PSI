@@ -19,6 +19,65 @@
 /*  margin-top: 50px;*/
 /*}*/
 
+/*.center-container {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  height: 50vh;*/
+/*  flex-direction: column;*/
+/*}*/
+
+/*.center-container .input-field mat-form-field {*/
+/*  width: 100%; !* Make the mat-form-field take up the full width of its container *!*/
+/*}*/
+
+/*.center-container .input-field input {*/
+/*  font-size: 20px; !* Increase font size to make the input text larger *!*/
+/*  padding: 10px; !* Increase padding to make the input field larger *!*/
+/*  width: 100%; !* Make the input field take up the full width of its container *!*/
+/*}*/
+
+/*.center-container .submit-button button {*/
+/*  font-size: 20px; !* Increase font size to make the button text larger *!*/
+/*  padding: 10px 20px; !* Increase padding to make the button larger *!*/
+/*  width: 100%; !* Make the button take up the full width of its container *!*/
+/*}*/
+
+/*.form-container {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  width: 100%;*/
+/*}*/
+
+/*.input-field {*/
+/*  width: 100%;*/
+/*}*/
+
+/*.submit-button {*/
+/*  margin-top: 80px; !* Adjust this value to change the distance of the button from the input field *!*/
+/*  text-align: center; !* This will center the button *!*/
+/*}*/
+
+/*::ng-deep .mat-raised-button {*/
+/*  padding: 12px 24px; !* Increase padding to make the button larger *!*/
+/*  font-size: 16px; !* Increase font size to make the button text larger *!*/
+/*}*/
+
+/*::ng-deep .mat-input-element {*/
+/*  background-color: transparent;*/
+/*  color: black;*/
+/*}*/
+
+/*.success-message {*/
+/*  margin-top: 50px;*/
+/*}*/
+
+/*.center-text {*/
+/*  text-align: center;*/
+/*  color: green;*/
+/*}*/
+
 .center-container {
   display: flex;
   justify-content: center;
@@ -28,33 +87,33 @@
 }
 
 .form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+  width: 80%;
+  max-width: 400px; /* Adjust the maximum width as needed */
 }
 
 .input-field {
   width: 100%;
 }
 
+.input-field mat-form-field {
+  width: 100%;
+}
+
+.input-field input {
+  font-size: 24px;
+  padding: 15px;
+  width: 100%;
+}
+
 .submit-button {
-  margin-top: 80px; /* Adjust this value to change the distance of the button from the input field */
-  text-align: center; /* This will center the button */
-}
-
-::ng-deep .mat-raised-button {
-  padding: 12px 24px; /* Increase padding to make the button larger */
-  font-size: 16px; /* Increase font size to make the button text larger */
-}
-
-::ng-deep .mat-input-element {
-  background-color: transparent;
-  color: black;
-}
-
-.success-message {
+  width: 100%;
   margin-top: 50px;
+}
+
+.submit-button button {
+  font-size: 24px;
+  padding: 15px 30px;
+  width: 100%;
 }
 
 .center-text {
