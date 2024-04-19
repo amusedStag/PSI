@@ -11,6 +11,8 @@ import { Website } from '../website';
 export class WebsiteListComponent implements OnInit, AfterViewInit {
   websites: MatTableDataSource<Website> = new MatTableDataSource<Website>();
   displayedColumns: string[] = ['url', 'registerDate', 'lastEvalDate', 'monitorState', 'webpages'];
+  color = '#673AB7';
+  text_color = '#FFFFFF';
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 

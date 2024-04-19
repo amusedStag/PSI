@@ -9,15 +9,16 @@
   flex-direction: column;
   text-align: center;
   max-width: 1000px;
-  margin: 0 auto;
   padding: 16px;
   background-color: white;
   color: black;
+  height: 500px;
+  margin: 200px auto 0;
 }
 
-.toolbar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
+/*.toolbar {*/
+/*  position: fixed;*/
+/*  bottom: 0;*/
+/*  width: 100%;*/
+/*}*/
 

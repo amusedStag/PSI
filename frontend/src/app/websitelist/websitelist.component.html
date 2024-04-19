@@ -11,35 +11,36 @@
     </mat-select>
   </mat-form-field>
   <button mat-button (click)="resetFilter()">Reset Filter</button>
-  <table mat-table [dataSource]="websites" matSort>
+
+  <table mat-table [dataSource]="websites" class="mat-elevation-z8" matSort>
 
     <!-- URL Column -->
     <ng-container matColumnDef="url">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>URL</th>
+      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color" mat-sort-header>URL</th>
       <td mat-cell *matCellDef="let website">{{website.url}}</td>
     </ng-container>
 
     <!-- Register Date Column -->
     <ng-container matColumnDef="registerDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Register Date</th>
+      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color" mat-sort-header>Register Date</th>
       <td mat-cell *matCellDef="let website">{{website.registerDate | date}}</td>
     </ng-container>
 
     <!-- Last Evaluation Date Column -->
     <ng-container matColumnDef="lastEvalDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Evaluation Date</th>
+      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color" mat-sort-header>Last Evaluation Date</th>
       <td mat-cell *matCellDef="let website">{{website.lastEvalDate | date}}</td>
     </ng-container>
 
     <!-- Monitor State Column -->
     <ng-container matColumnDef="monitorState">
-      <th mat-header-cell *matHeaderCellDef>Monitor State</th>
+      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Monitor State</th>
       <td mat-cell *matCellDef="let website">{{website.monitorState}}</td>
     </ng-container>
 
     <!-- Webpages Column -->
     <ng-container matColumnDef="webpages">
-      <th mat-header-cell *matHeaderCellDef>Webpages</th>
+      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Webpages</th>
       <td mat-cell *matCellDef="let website">
         <div *ngFor="let webpage of website.webpages">
           {{webpage.url}}

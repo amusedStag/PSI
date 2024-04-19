@@ -4,8 +4,11 @@
 }
 
 table {
-  background-color: #c81c5c; /* Change this to your desired table color */
-  color: white; /* Change this to your desired text color */
+  background-color: #ffffff; /* Change this to your desired table color */
+}
+
+tr:hover {
+  background-color: #d9d9d9; /* Change this to your desired row hover color */
 }
 
 th.mat-sort-header-sorted {
@@ -21,3 +24,16 @@ h1 {
   width: 10%;
   margin: 15px auto;
 }
+
+/*tr.mat-header-cell {*/
+/*  background-color: red;*/
+/*}*/
+
+/*tr {*/
+/*  background-color: gray;*/
+/*}*/
+
+
+/*.mat-header-cell {*/
+/*  background-color: red;*/
+/*}*/

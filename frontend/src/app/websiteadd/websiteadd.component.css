@@ -39,7 +39,7 @@
 }
 
 .submit-button {
-  margin-top: 10px; /* Adjust this value to change the distance of the button from the input field */
+  margin-top: 80px; /* Adjust this value to change the distance of the button from the input field */
   text-align: center; /* This will center the button */
 }
 

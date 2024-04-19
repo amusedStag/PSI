@@ -1,7 +1,22 @@
-<h1>{{title}}</h1>
-<nav>
-  <a mat-button routerLink="/home">Home page</a>
-  <a mat-button routerLink="/addwebsite">Add Website</a>
-  <a mat-button routerLink="/websitelist">Website list</a>
-</nav>
+<!--<h1>{{title}}</h1>-->
+<!--<nav>-->
+<!--  <a mat-button routerLink="/home">Home page</a>-->
+<!--  <a mat-button routerLink="/addwebsite">Add Website</a>-->
+<!--  <a mat-button routerLink="/websitelist">Website list</a>-->
+<!--</nav>-->
+<!--<router-outlet></router-outlet>-->
+<mat-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <nav>
+    <a mat-button routerLink="/home">Home page</a>
+    <a mat-button routerLink="/addwebsite">Add Website</a>
+    <a mat-button routerLink="/websitelist">Website list</a>
+  </nav>
+</mat-toolbar>
+<mat-toolbar color="primary" class="bottom-toolbar">
+  <span>PSI Project 2023/2024</span>
+  <span class="spacer"></span>
+  <button mat-button>Group 28</button>
+</mat-toolbar>
 <router-outlet></router-outlet>
