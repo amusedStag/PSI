@@ -1,0 +1,28 @@
+h2 {
+  color: #b789ff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+.clear {
+  color: #333;
+  background-color: #e0e0e0;
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.clear:hover {
+  color: white;
+  background-color: #b789ff;
+}
+
+:host {
+  position: fixed;
+  bottom: 100px; /* Adjust this value to give space for the footer */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}

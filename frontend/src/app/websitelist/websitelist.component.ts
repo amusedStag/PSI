@@ -21,7 +21,6 @@ export class WebsiteListComponent implements OnInit, AfterViewInit {
       _id: '1',
       url: 'https://www.example1.com',
       registerDate: new Date(),
-      lastEvalDate: new Date(),
       monitorState: 'Por avaliar',
       webpages: []
     };

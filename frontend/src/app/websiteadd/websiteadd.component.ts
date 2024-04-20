@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
+import {MessageService} from "../message.service";
 //import { WebsiteService } from '../website.service';
 
 @Component({
@@ -25,7 +26,7 @@ export class WebsiteAddComponent {
   successMessage: string | null = null;
   //'^((http|https)://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?$' old regex
 
-  constructor(private formBuilder: FormBuilder, /*private websiteService: WebsiteService,*/ private router: Router) {
+  constructor(private formBuilder: FormBuilder, /*private websiteService: WebsiteService,*/ private router: Router, private ms: MessageService) {
     this.websiteForm = this.formBuilder.group({
       url: ['', [Validators.required, Validators.pattern('^((http|https)://)?www\\.[\\w-]+\\.[a-z]{2,}$')]]
     });
@@ -38,6 +39,7 @@ export class WebsiteAddComponent {
       //   this.router.navigate(['/website/list']);
       // });
       console.log(url);
+      this.ms.add(`in addWebsite ${url}`);
       this.websiteForm.reset();
       this.successMessage = 'Website added successfully';
 
