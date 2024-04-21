@@ -4,15 +4,15 @@
 }
 
 table {
-  background-color: #ffffff; /* Change this to your desired table color */
+  background-color: #ffffff;
 }
 
 tr:hover {
-  background-color: #d9d9d9; /* Change this to your desired row hover color */
+  background-color: #d9d9d9;
 }
 
-th.mat-sort-header-sorted {
-  color: black;
+.clickable-row {
+  cursor: pointer;
 }
 
 h1 {
@@ -25,15 +25,3 @@ h1 {
   margin: 15px auto;
 }
 
-/*tr.mat-header-cell {*/
-/*  background-color: red;*/
-/*}*/
-
-/*tr {*/
-/*  background-color: gray;*/
-/*}*/
-
-
-/*.mat-header-cell {*/
-/*  background-color: red;*/
-/*}*/

@@ -1,7 +1,7 @@
 import {WebsitePage} from "./websitepage";
 
 export interface Website {
-  _id: string; // Optional if using MongoDB ObjectId
+  _id: string;
   url: string;
   registerDate: Date;
   lastEvalDate?: Date;

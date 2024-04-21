@@ -20,6 +20,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import {MatSelectModule} from "@angular/material/select";
 import { MessageComponent } from './message/message.component';
+import { WebsiteDetailComponent } from './websitedetail/websitedetail.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MessageComponent } from './message/message.component';
     WebsiteAddComponent,
     WebsiteListComponent,
     MessageComponent,
+    WebsiteDetailComponent,
   ],
   imports: [
     BrowserModule,

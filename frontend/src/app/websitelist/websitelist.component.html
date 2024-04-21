@@ -3,14 +3,14 @@
   <mat-form-field class="filter">
     <mat-label>Filter</mat-label>
     <mat-select (selectionChange)="applyFilter($event.value)">
-      <mat-option value="">All</mat-option>
+      <mat-option value="">No filter</mat-option>
       <mat-option value="Por avaliar">Por avaliar</mat-option>
       <mat-option value="Em avaliação">Em avaliação</mat-option>
       <mat-option value="Avaliado">Avaliado</mat-option>
       <mat-option value="Erro na avaliação">Erro na avaliação</mat-option>
     </mat-select>
   </mat-form-field>
-  <button mat-button (click)="resetFilter()">Reset Filter</button>
+<!--  <button mat-button (click)="resetFilter()">Reset Filter</button>-->
 
   <table mat-table [dataSource]="websites" class="mat-elevation-z8" matSort>
 
@@ -49,6 +49,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateToDetails(row)" class="clickable-row"></tr>
   </table>
 </div>

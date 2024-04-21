@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-import {MessageService} from "../message.service";
+import { MessageService } from "../message.service";
+import { WebsiteService } from "../website.service";
+import { Website } from "../website";
 //import { WebsiteService } from '../website.service';
 
 @Component({
@@ -26,7 +28,7 @@ export class WebsiteAddComponent {
   successMessage: string | null = null;
   //'^((http|https)://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?$' old regex
 
-  constructor(private formBuilder: FormBuilder, /*private websiteService: WebsiteService,*/ private router: Router, private ms: MessageService) {
+  constructor(private formBuilder: FormBuilder, private websiteService: WebsiteService, private router: Router, private ms: MessageService) {
     this.websiteForm = this.formBuilder.group({
       url: ['', [Validators.required, Validators.pattern('^((http|https)://)?www\\.[\\w-]+\\.[a-z]{2,}$')]]
     });
@@ -35,13 +37,15 @@ export class WebsiteAddComponent {
   addWebsite(): void {
     if (this.websiteForm.valid) {
       const url = this.websiteForm.value.url.trim();
-      // this.websiteService.addWebsite(url).subscribe(() => {
-      //   this.router.navigate(['/website/list']);
-      // });
+      this.websiteService.addWebsite({ url } as Website).subscribe(() => {
+        this.successMessage = 'Website added successfully';
+        setTimeout(() => {
+          this.router.navigate(['/websitelist']);
+        }, 3000); // Navigate after 2 seconds
+      });
       console.log(url);
       this.ms.add(`in addWebsite ${url}`);
       this.websiteForm.reset();
-      this.successMessage = 'Website added successfully';
 
       setTimeout(() => {
         this.successMessage = null;
