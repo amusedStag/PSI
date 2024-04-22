@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { WebsiteAddComponent } from './websiteadd/websiteadd.component';
@@ -21,8 +20,8 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatSelectModule } from "@angular/material/select";
 import { MessageComponent } from './message/message.component';
 import { WebsiteDetailComponent } from './websitedetail/websitedetail.component';
-import {MatLineModule} from "@angular/material/core";
-import {MatGridListModule} from "@angular/material/grid-list";
+import { MatLineModule } from "@angular/material/core";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import {MatGridListModule} from "@angular/material/grid-list";
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule,
     MatCardModule,
     MatMenuModule,
     MatFormFieldModule,
