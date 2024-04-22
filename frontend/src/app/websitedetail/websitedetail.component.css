@@ -1,0 +1,62 @@
+h1 {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.list-container {
+  padding: 20px;
+  text-align: left;
+  background-color: #eeeeee;
+  width: 78%;
+  margin: auto;
+  position: relative;
+  top: 10px;
+  border-radius: 10px;
+}
+
+.table-container {
+  width: 80%;
+  margin: auto;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  flex-direction: column;
+  position: fixed;
+  bottom: 50px; /* Adjust this value as needed */
+  width: 100%;
+}
+
+.form-container {
+  width: 80%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+  max-height: 1px;
+}
+
+.input-field {
+  width: 100%;
+}
+
+.input-field mat-form-field {
+  width: 100%;
+}
+
+.input-field input {
+  font-size: 24px;
+  padding: 15px;
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.submit-button button {
+  font-size: 24px;
+  padding: 15px 30px;
+  width: 100%;
+}

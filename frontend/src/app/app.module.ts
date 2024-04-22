@@ -18,9 +18,11 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
-import {MatSelectModule} from "@angular/material/select";
+import { MatSelectModule } from "@angular/material/select";
 import { MessageComponent } from './message/message.component';
 import { WebsiteDetailComponent } from './websitedetail/websitedetail.component';
+import {MatLineModule} from "@angular/material/core";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { WebsiteDetailComponent } from './websitedetail/websitedetail.component'
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatLineModule,
+    MatGridListModule
   ],
   providers: [
     provideClientHydration()

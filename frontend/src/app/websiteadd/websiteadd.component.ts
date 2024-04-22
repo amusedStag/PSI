@@ -41,7 +41,7 @@ export class WebsiteAddComponent {
         this.successMessage = 'Website added successfully';
         setTimeout(() => {
           this.router.navigate(['/websitelist']);
-        }, 3000); // Navigate after 2 seconds
+        }, 3000); // Navigate after 3 seconds
       });
       console.log(url);
       this.ms.add(`in addWebsite ${url}`);

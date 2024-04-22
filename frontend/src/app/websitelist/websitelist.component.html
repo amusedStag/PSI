@@ -29,7 +29,9 @@
     <!-- Last Evaluation Date Column -->
     <ng-container matColumnDef="lastEvalDate">
       <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color" mat-sort-header>Last Evaluation Date</th>
-      <td mat-cell *matCellDef="let website">{{website.lastEvalDate | date}}</td>
+      <td mat-cell *matCellDef="let website">
+        {{website.lastEvalDate ? (website.lastEvalDate | date) : 'Not evaluated yet'}}
+      </td>
     </ng-container>
 
     <!-- Monitor State Column -->

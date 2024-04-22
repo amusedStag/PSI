@@ -3,6 +3,7 @@ import { MessageService } from "./message.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {catchError, Observable, of, tap} from "rxjs";
 import {Website} from "./website";
+import {WebsitePage} from "./websitepage";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class WebsiteService {
       );
   }
 
-  getWebsite(id: string): Observable<Website> {
+  getWebsite(id: string | null): Observable<Website> {
     const url = this.websiteUrl + '/' + id;
     return this.http.get<Website>(url).pipe(
       tap(_ => this.log(`fetched website id=${id}`)),
@@ -34,11 +35,11 @@ export class WebsiteService {
     );
   }
 
-  updateWebsitePages(website: Website):Observable<Website> {
-    const url = this.websiteUrl + '/' + website._id + '/pages';
-    return this.http.put<Website>(url, website, this.httpOptions)
+  updateWebsitePages(webpage: WebsitePage, website: Website | undefined): Observable<Website> {
+    const url = this.websiteUrl + '/' + website?._id + '/addpage';
+    return this.http.put<Website>(url, webpage, this.httpOptions)
       .pipe(
-        tap(_ => this.log(`updated pages of website id=${website._id}`)),
+        tap(_ => this.log(`updated pages with webpage id=${webpage._id}`)),
         catchError(this.handleError<Website>('updateWebsitePages'))
       );
   }
