@@ -15,9 +15,9 @@ const websitePageSchema = new mongoose.Schema({
     },
     pageState: {
         type: String,
-        enum: ['Conforme', 'Não conforme'],
+        enum: ['Conforme', 'Não conforme', 'Por avaliar', 'Em avaliação', 'Erro na avaliação'],
         required: true,
-        default: 'Não conforme'
+        default: 'Por avaliar'
     }
 });
 
