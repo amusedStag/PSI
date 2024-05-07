@@ -18,6 +18,9 @@ const websitePageSchema = new mongoose.Schema({
         enum: ['Conforme', 'Não conforme', 'Por avaliar', 'Em avaliação', 'Erro na avaliação'],
         required: true,
         default: 'Por avaliar'
+    },
+    lastEval: {
+        type: mongoose.Schema.Types.Mixed
     }
 });
 

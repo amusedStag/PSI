@@ -10,8 +10,8 @@ import {WebsitePage} from "./websitepage";
 })
 export class WebsiteService {
 
-  private websitesUrl = 'http://appserver.alunos.di.fc.ul.pt:3078/websites';
-  private websiteUrl = 'http://appserver.alunos.di.fc.ul.pt:3078/website';
+  private websitesUrl = 'http://localhost:3078/websites'; //replace with appserver url (http://appserver.alunos.di.fc.ul.pt:3078/websites)
+  private websiteUrl = 'http://localhost:3078/website'; // replace with appserver url (http://appserver.alunos.di.fc.ul.pt:3078/website)
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -82,5 +82,26 @@ export class WebsiteService {
 
   private log(message: string) {
     this.ms.add(`WebsiteService: ${message}`);
+  }
+
+  deleteWebsitePage(webpage: string, website: string | undefined): Observable<any> {
+    if (!website) {
+      throw new Error('Website is undefined');
+    }
+    const url = this.websiteUrl + '/' + website + '/deletepage/' + webpage;
+    return this.http.delete(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted webpage id=${webpage}`)),
+      catchError(this.handleError('deleteWebsitePage'))
+    );
+  }
+
+  evaluateWebsite(website: string | undefined, websitePage: WebsitePage): Observable<any> {
+    console.log(websitePage);
+    const url = this.websiteUrl + '/' + website + '/eval';
+    return this.http.post<any>(url, websitePage, this.httpOptions)
+      .pipe(
+        tap(_ => this.log(`evaluated website id=${website}`)),
+        catchError(this.handleError<any>('evaluateWebsite'))
+      );
   }
 }

@@ -3,6 +3,7 @@ var router = express.Router();
 const Website = require('../models/Website');
 const WebsitePage = require('../models/WebsitePage');
 const websiteController = require('../controllers/websiteController');
+const evalController = require('../controllers/evalController');
 
 // /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -21,14 +22,14 @@ router.get('/init', async (req, res) => {
     // Initialize collections with some values
     const websites = await Website.insertMany([
       {
-        url: 'http://www.example.com',
+        url: 'http://example.com',
         monitorState: 'Por avaliar',
         lastEvalDate: pastDate,
         registerDate: pastDate,
         webpages: [] // No webpages initially
       },
       {
-        url: 'http://www.anotherexample.com',
+        url: 'http://anotherexample.com',
         monitorState: 'Por avaliar',
         webpages: [] // No webpages initially
       }
@@ -65,11 +66,13 @@ router.get('/website/:id', websiteController.website_detail);
 
 router.post('/website', websiteController.website_create_post);
 
-
 router.put('/website/:id/addpage', websiteController.website_update_pages);
 
+router.delete('/website/:id', websiteController.website_delete_post);
 
-//router.delete('/website/:id', websiteController.website_delete_post);
+router.delete('/website/:websiteId/deletepage/:webpageId', websiteController.website_delete_page);
+
+router.post('/website/:id/eval', evalController.website_evaluate);
 
 
 

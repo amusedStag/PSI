@@ -1,4 +1,5 @@
 import {Website} from "./website";
+import {Observable} from "rxjs";
 
 export interface WebsitePage {
   _id: string;
@@ -6,4 +7,5 @@ export interface WebsitePage {
   url: string;
   lastEvalDate?: Date;
   pageState: string;
+  lastEval?: Object;
 }

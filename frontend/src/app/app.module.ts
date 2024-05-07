@@ -22,6 +22,9 @@ import { MessageComponent } from './message/message.component';
 import { WebsiteDetailComponent } from './websitedetail/websitedetail.component';
 import { MatLineModule } from "@angular/material/core";
 import { MatGridListModule } from "@angular/material/grid-list";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ConfirmDialogComponent} from "./confirm-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
     WebsiteListComponent,
     MessageComponent,
     WebsiteDetailComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,9 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatSortModule,
     MatSelectModule,
     MatLineModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [
     provideClientHydration()

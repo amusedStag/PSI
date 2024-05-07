@@ -2,6 +2,7 @@ const Website = require('../models/Website');
 const WebsitePage = require('../models/WebsitePage');
 const asyncHandler = require('express-async-handler');
 
+
 exports.website_list = asyncHandler(async (req, res) => {
     try {
         const websites = await Website.find().populate('webpages');
@@ -65,4 +66,48 @@ exports.website_update_pages = asyncHandler(async (req, res) => {
         res.status(500).json({ message: "Error updating website pages" });
     }
 });
+
+exports.website_delete_post = asyncHandler(async (req, res) => {
+    const websiteId = req.params.id;
+
+    try {
+        const website = await Website.findById(websiteId);
+        if (!website) {
+            return res.status(404).json({ message: "Website not found" });
+        }
+
+        await WebsitePage.deleteMany({ website: websiteId });
+        await Website.findByIdAndDelete(websiteId);
+
+        res.json({ message: 'Website deleted successfully' });
+    } catch (err) {
+        console.error("Error deleting website:", err);
+        res.status(500).json({ message: "Error deleting website" });
+    }
+});
+
+exports.website_delete_page = asyncHandler(async (req, res) => {
+    const { websiteId, webpageId } = req.params;
+
+    try {
+        const website = await Website.findByIdAndUpdate(websiteId, {
+            $pull: { webpages: webpageId }
+        }, { new: true });
+
+        if (!website) {
+            return res.status(404).json({ message: "Website not found" });
+        }
+
+        const webpage = await WebsitePage.findByIdAndDelete(webpageId);
+        if (!webpage) {
+            return res.status(404).json({ message: "Webpage not found" });
+        }
+
+        res.json({ message: 'Webpage deleted successfully', webpage });
+    } catch (err) {
+        console.error("Error deleting webpage:", err);
+        res.status(500).json({ message: "Error deleting webpage" });
+    }
+});
+
 
