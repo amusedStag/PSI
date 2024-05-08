@@ -8,4 +8,8 @@ export interface WebsitePage {
   lastEvalDate?: Date;
   pageState: string;
   lastEval?: Object;
+  nErrorsA?: number;
+  nErrorsAA?: number;
+  nErrorsAAA?: number;
+  errorCodes?: string[];
 }

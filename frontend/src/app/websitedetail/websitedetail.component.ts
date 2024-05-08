@@ -39,6 +39,7 @@ export class WebsiteDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWebsite();
+    this.calculateStats(this.website as Website)
   }
 
   getWebsite(): void {
@@ -114,6 +115,7 @@ export class WebsiteDetailComponent implements OnInit {
     await Promise.all(promises);
     this.stopPolling();
     this.getWebsite();
+    this.calculateStats(this.website as Website);
   }
 
   startPolling() {
@@ -124,6 +126,29 @@ export class WebsiteDetailComponent implements OnInit {
 
   stopPolling() {
     clearInterval(this.interval);
+  }
+
+  calculateStats(website: Website) {
+    website.nPagesWithoutErrors = website.webpages.filter(page => page.nErrorsA === 0 && page.nErrorsAA === 0 && page.nErrorsAAA === 0).length;
+    website.nPagesWithErrors = website.webpages.length - website.nPagesWithoutErrors;
+    website.nPagesWithAError = website.webpages.filter(page => page.nErrorsA !== undefined && page.nErrorsA > 0).length;
+    website.nPagesWithAAError = website.webpages.filter(page => page.nErrorsAA !== undefined && page.nErrorsAA > 0).length;
+    website.nPagesWithAAAError = website.webpages.filter(page => page.nErrorsAAA !== undefined && page.nErrorsAAA > 0).length;
+
+    const errorCodes = new Map<string, number>();
+    website.webpages.forEach(page => {
+      if (page.errorCodes) {
+        page.errorCodes.forEach(code => {
+          if (errorCodes.has(code)) {
+            errorCodes.set(code, errorCodes.get(code) as number + 1);
+          } else {
+            errorCodes.set(code, 1);
+          }
+        });
+      }
+    });
+
+    website.top10Errors = Array.from(errorCodes).sort((a, b) => b[1] - a[1]).slice(0, 10).map(a => a[0]);
   }
 
 }

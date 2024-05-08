@@ -104,4 +104,5 @@ export class WebsiteService {
         catchError(this.handleError<any>('evaluateWebsite'))
       );
   }
+
 }

@@ -21,7 +21,20 @@ const websitePageSchema = new mongoose.Schema({
     },
     lastEval: {
         type: mongoose.Schema.Types.Mixed
+    },
+    nErrorsA: {
+        type: Number
+    },
+    nErrorsAA: {
+        type: Number
+    },
+    nErrorsAAA: {
+        type: Number
+    },
+    errorCodes: {
+        type: [String]
     }
+    //nErrorsA number, nErrorsAA number, nErrorsAAA number, errorCodes [String]
 });
 
 const WebsitePage = mongoose.model('WebsitePage', websitePageSchema);
