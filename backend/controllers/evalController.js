@@ -19,6 +19,7 @@ const clusterOptions = {
 };
 // opções para lançamento do browser
 const launchOptions = {
+    args: ['--no-sandbox', '--ignore-certificate-errors']
 };
 
 // criar instância do avaliador

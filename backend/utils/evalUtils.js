@@ -40,20 +40,20 @@ function pageStatus(webpage, report) {
             if (success.level === 'A') {
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    webpage.nErrorsA++;
+                    webpage.nErrorsA++; //deve ser somar os failed
                     webpage.errorCodes.push(rule.code);
                 }
             }
             else if (success.level === 'AA') {
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    webpage.nErrorsAA++;
+                    webpage.nErrorsAA++; //deve ser somar os failed
                     webpage.errorCodes.push(rule.code);
                 }
             }
             else if (success.level === 'AAA') {
                 if (metadata.outcome === 'failed') {
-                    webpage.nErrorsAAA++;
+                    webpage.nErrorsAAA++; //deve ser somar os failed
                     webpage.errorCodes.push(rule.code);
                 }
             }
