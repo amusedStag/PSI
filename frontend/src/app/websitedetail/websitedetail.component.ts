@@ -10,6 +10,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../confirm-dialog.component";
 import {Location} from "@angular/common";
+import { descs } from '../descriptions';
 
 @Component({
   selector: 'app-websitedetail',
@@ -28,6 +29,7 @@ export class WebsiteDetailComponent implements OnInit {
   selection = new SelectionModel<WebsitePage>(true, []);
   interval: number | undefined;
   hasConformeOrNonConformePages: boolean = false;
+  descriptions: { [key: string]: string } = descs;
 
   webpageForm = this.fb.group({
     url: ['', [
@@ -192,7 +194,11 @@ export class WebsiteDetailComponent implements OnInit {
     website.top10Errors = Array.from(errors.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
-      .map(([key, value]) => ({key, value}));
+      .map(([key, value]) => ({key, value, desc: this.getDescription(key)}));
+  }
+
+  getDescription(key: string): string {
+    return this.descriptions[key];
   }
 
 }

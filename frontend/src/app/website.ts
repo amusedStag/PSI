@@ -17,5 +17,5 @@ export interface Website {
   pPagesWithAAError: number;
   nPagesWithAAAError: number;
   pPagesWithAAAError: number;
-  top10Errors: Array<{key: string, value: number}>;
+  top10Errors: Array<{key: string, value: number, desc: string}>;
 }

@@ -102,7 +102,7 @@
       <h3>Top 10 Errors</h3>
       <ul>
         <ng-container *ngIf="website?.top10Errors as top10Errors">
-          <li *ngFor="let error of top10Errors">{{error.key}}: {{error.value}}</li>
+          <li *ngFor="let error of top10Errors">{{error.key}}: {{error.desc}} - {{error.value}}</li>
         </ng-container>
       </ul>
     </div>
