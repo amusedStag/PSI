@@ -1,6 +1,7 @@
 const Website = require('../models/Website');
 const WebsitePage = require('../models/WebsitePage');
 const asyncHandler = require('express-async-handler');
+const { websiteStatus } = require("../utils/evalUtils");
 
 
 exports.website_list = asyncHandler(async (req, res) => {
@@ -58,6 +59,7 @@ exports.website_update_pages = asyncHandler(async (req, res) => {
         await webpage.save();
 
         website.webpages.push(webpage);
+        website.monitorState = websiteStatus(website);
         await website.save();
 
         res.status(201).json(website);
@@ -103,6 +105,10 @@ exports.website_delete_page = asyncHandler(async (req, res) => {
         if (!webpage) {
             return res.status(404).json({ message: "Webpage not found" });
         }
+
+        const updatedWebsite = await Website.findById(websiteId).populate('webpages');
+        updatedWebsite.monitorState = websiteStatus(updatedWebsite);
+        await updatedWebsite.save();
 
         res.json({ message: 'Webpage deleted successfully', webpage });
     } catch (err) {

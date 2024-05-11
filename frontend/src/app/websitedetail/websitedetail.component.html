@@ -1,90 +1,110 @@
-<div class="list-container">
-  <mat-grid-list cols="2" rowHeight="50px">
-    <mat-grid-tile>
-      <h4 matLine>URL: {{website?.url}}</h4>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <h4 matLine>Register Date: {{website?.registerDate | date}}</h4>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <h4 matLine>Last Evaluation Date: {{website?.lastEvalDate | date}}</h4>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <h4 matLine>Monitor State: {{website?.monitorState}}</h4>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <button mat-raised-button color="warn" class="delete" (click)="confirmAndDelete()">Delete website</button>
-</div>
-
-<div class="table-container">
-  <h1>Webpages</h1>
-
-  <table mat-table [dataSource]="webpages" class="mat-elevation-z8">
-
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Select</th>
-      <td mat-cell *matCellDef="let webpage">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(webpage) : null"
-                      [checked]="selection.isSelected(webpage)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- URL Column -->
-    <ng-container matColumnDef="url">
-      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">URL</th>
-      <td mat-cell *matCellDef="let webpage">{{webpage.url}}</td>
-    </ng-container>
-
-    <!-- Last Evaluation Date Column -->
-    <ng-container matColumnDef="lastEvalDate">
-      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Last Evaluation Date</th>
-      <td mat-cell *matCellDef="let webpage">
-        {{webpage.lastEvalDate ? (webpage.lastEvalDate | date) : 'Not evaluated yet'}}
-      </td>
-    </ng-container>
-
-    <!-- Monitor State Column -->
-    <ng-container matColumnDef="pageState">
-      <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Page State</th>
-      <td mat-cell *matCellDef="let webpage">{{webpage.pageState}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <button mat-raised-button color="warn" (click)="deleteSelected()">Delete selected</button>
-  <button mat-raised-button color="primary" (click)="evaluateSelected()">Evaluate selected</button>
-</div>
-
-<div class="center-container">
-  <h1>Add webpage</h1>
-  <div class="form-container">
-    <form [formGroup]="webpageForm" (ngSubmit)="addWebpage()">
-      <div class="input-field">
-        <mat-form-field appearance="fill">
-          <mat-label>Webpage URL</mat-label>
-          <input matInput type="text" id="url" formControlName="url">
-          <mat-error *ngIf="webpageForm.get('url')?.invalid && webpageForm.get('url')?.touched">
-            <div *ngIf="webpageForm.get('url')?.errors?.['required']">
-              Webpage URL is required
-            </div>
-            <div *ngIf="webpageForm.get('url')?.errors?.['pattern']">
-              Please enter a valid URL (e.g., http://example.com or example.com)
-            </div>
-            <div *ngIf="webpageForm.get('url')?.errors?.['notSubpage']">
-              URL must be a subpage of the website
-            </div>
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="submit-button">
-        <button mat-raised-button color="primary" type="submit" [disabled]="webpageForm.invalid">Submit</button>
-      </div>
-    </form>
+<mat-tab-group>
+  <mat-tab label="General information">
+  <div class="list-container">
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+        <h4 matLine>URL: {{website?.url}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <h4 matLine>Register Date: {{website?.registerDate | date}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <h4 matLine>Last Evaluation Date: {{website?.lastEvalDate | date}}</h4>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <h4 matLine>Monitor State: {{website?.monitorState}}</h4>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <button mat-raised-button color="warn" class="delete" (click)="confirmAndDelete()">Delete website</button>
   </div>
-</div>
 
+  <div class="table-container">
+    <h1>Webpages</h1>
 
+    <table mat-table [dataSource]="webpages" class="mat-elevation-z8">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Select</th>
+        <td mat-cell *matCellDef="let webpage">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(webpage) : null"
+                        [checked]="selection.isSelected(webpage)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- URL Column -->
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">URL</th>
+        <td mat-cell *matCellDef="let webpage">{{webpage.url}}</td>
+      </ng-container>
+
+      <!-- Last Evaluation Date Column -->
+      <ng-container matColumnDef="lastEvalDate">
+        <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Last Evaluation Date</th>
+        <td mat-cell *matCellDef="let webpage">
+          {{webpage.lastEvalDate ? (webpage.lastEvalDate | date) : 'Not evaluated yet'}}
+        </td>
+      </ng-container>
+
+      <!-- Monitor State Column -->
+      <ng-container matColumnDef="pageState">
+        <th mat-header-cell *matHeaderCellDef [style.background-color]="color" [style.color]="text_color">Page State</th>
+        <td mat-cell *matCellDef="let webpage">{{webpage.pageState}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="warn" (click)="deleteSelected()">Delete selected</button>
+    <button mat-raised-button color="primary" (click)="evaluateSelected()">Evaluate selected</button>
+  </div>
+
+  <div class="center-container">
+    <h1>Add webpage</h1>
+    <div class="form-container">
+      <form [formGroup]="webpageForm" (ngSubmit)="addWebpage()">
+        <div class="input-field">
+          <mat-form-field appearance="fill">
+            <mat-label>Webpage URL</mat-label>
+            <input matInput type="text" id="url" formControlName="url">
+            <mat-error *ngIf="webpageForm.get('url')?.invalid && webpageForm.get('url')?.touched">
+              <div *ngIf="webpageForm.get('url')?.errors?.['required']">
+                Webpage URL is required
+              </div>
+              <div *ngIf="webpageForm.get('url')?.errors?.['pattern']">
+                Please enter a valid URL (e.g., http://example.com or example.com)
+              </div>
+              <div *ngIf="webpageForm.get('url')?.errors?.['notSubpage']">
+                URL must be a subpage of the website
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="submit-button">
+          <button mat-raised-button color="primary" type="submit" [disabled]="webpageForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  </mat-tab>
+
+  <mat-tab label="Statistics" [disabled]="!hasConformeOrNonConformePages">
+    <div class="statistics-container">
+      <h2>Website Statistics</h2>
+      <p>Pages without errors: {{website?.nPagesWithoutErrors}} ({{website?.pPagesWithoutErrors | number:'1.0-0'}}%)</p>
+      <p>Pages with errors: {{website?.nPagesWithErrors}} ({{website?.pPagesWithErrors | number:'1.0-0'}}%)</p>
+      <p>Pages with A level errors: {{website?.nPagesWithAError}} ({{website?.pPagesWithAError | number:'1.0-0'}}%)</p>
+      <p>Pages with AA level errors: {{website?.nPagesWithAAError}} ({{website?.pPagesWithAAError | number:'1.0-0'}}%)</p>
+      <p>Pages with AAA level errors: {{website?.nPagesWithAAAError}} ({{website?.pPagesWithAAAError | number:'1.0-0'}}%)</p>
+      <h3>Top 10 Errors</h3>
+      <ul>
+        <ng-container *ngIf="website?.top10Errors as top10Errors">
+          <li *ngFor="let error of top10Errors">{{error.key}}: {{error.value}}</li>
+        </ng-container>
+      </ul>
+    </div>
+  </mat-tab>
+</mat-tab-group>

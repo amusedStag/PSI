@@ -25,6 +25,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ConfirmDialogComponent} from "./confirm-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -36,28 +37,29 @@ import {MatDialogModule} from "@angular/material/dialog";
     WebsiteDetailComponent,
     ConfirmDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatSelectModule,
-    MatLineModule,
-    MatGridListModule,
-    MatCheckboxModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatSelectModule,
+        MatLineModule,
+        MatGridListModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatTabsModule
+    ],
   providers: [
     provideClientHydration()
   ],

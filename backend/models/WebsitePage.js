@@ -23,16 +23,20 @@ const websitePageSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed
     },
     nErrorsA: {
-        type: Number
+        type: Number,
+        default: 0
     },
     nErrorsAA: {
-        type: Number
+        type: Number,
+        default: 0
     },
     nErrorsAAA: {
-        type: Number
+        type: Number,
+        default: 0
     },
     errorCodes: {
-        type: [String]
+        type: [String],
+        default: []
     }
     //nErrorsA number, nErrorsAA number, nErrorsAAA number, errorCodes [String]
 });

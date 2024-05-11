@@ -5,11 +5,11 @@ import {MessageService} from "../message.service";
 import {Website} from "../website";
 import {MatTableDataSource} from "@angular/material/table";
 import {WebsitePage} from "../websitepage";
-import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {AbstractControl, FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatDialog} from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "../confirm-dialog.component";
-import { Location } from "@angular/common";
+import {ConfirmDialogComponent} from "../confirm-dialog.component";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-websitedetail',
@@ -27,6 +27,7 @@ export class WebsiteDetailComponent implements OnInit {
   webpages: MatTableDataSource<WebsitePage> = new MatTableDataSource<WebsitePage>();
   selection = new SelectionModel<WebsitePage>(true, []);
   interval: number | undefined;
+  hasConformeOrNonConformePages: boolean = false;
 
   webpageForm = this.fb.group({
     url: ['', [
@@ -39,7 +40,6 @@ export class WebsiteDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWebsite();
-    this.calculateStats(this.website as Website)
   }
 
   getWebsite(): void {
@@ -48,6 +48,8 @@ export class WebsiteDetailComponent implements OnInit {
       .subscribe(website => {
         this.website = website;
         this.webpages = new MatTableDataSource(website.webpages);
+        this.calculateStats(this.website as Website);
+        this.hasConformeOrNonConformePages = this.website.webpages.some(webpage => webpage.pageState === 'Conforme' || webpage.pageState === 'Não conforme');
       });
   }
 
@@ -107,21 +109,45 @@ export class WebsiteDetailComponent implements OnInit {
     }
   }
 
+  // async evaluateSelected() {
+  //   this.startPolling();
+  //   const promises = this.selection.selected.map(webpage =>
+  //     this.ws.evaluateWebsite(this.website?._id, { _id: webpage._id, url: webpage.url } as WebsitePage)
+  //       .toPromise()
+  //       .catch(error => {
+  //         console.error(`Error evaluating webpage ${webpage.url}:`, error);
+  //       })
+  //   );
+  //   try {
+  //     await Promise.all(promises);
+  //     this.getWebsite();
+  //     this.calculateStats(this.website as Website);
+  //   } catch (error) {
+  //     console.error('Error during evaluation:', error);
+  //   } finally {
+  //     this.stopPolling();
+  //   }
+  // }
   async evaluateSelected() {
     this.startPolling();
-    const promises = this.selection.selected.map(webpage =>
-      this.ws.evaluateWebsite(this.website?._id, { _id: webpage._id, url: webpage.url } as WebsitePage).toPromise()
-    );
-    await Promise.all(promises);
-    this.stopPolling();
+    for (const webpage of this.selection.selected) {
+      try {
+        await this.ws.evaluateWebsite(this.website?._id, { _id: webpage._id, url: webpage.url } as WebsitePage).toPromise();
+      } catch (error) {
+        console.error(`Error evaluating webpage ${webpage.url}:`, error);
+        //this.stopPolling();
+      }
+    }
     this.getWebsite();
-    this.calculateStats(this.website as Website);
+    this.calculateStats(this.website as Website); //might be useless as its already in getWebsite
+    this.stopPolling();
+    this.selection.clear();
   }
 
   startPolling() {
     this.interval = setInterval(() => {
       this.getWebsite();
-    }, 500);
+    }, 1000);
   }
 
   stopPolling() {
@@ -129,26 +155,44 @@ export class WebsiteDetailComponent implements OnInit {
   }
 
   calculateStats(website: Website) {
-    website.nPagesWithoutErrors = website.webpages.filter(page => page.nErrorsA === 0 && page.nErrorsAA === 0 && page.nErrorsAAA === 0).length;
-    website.nPagesWithErrors = website.webpages.length - website.nPagesWithoutErrors;
-    website.nPagesWithAError = website.webpages.filter(page => page.nErrorsA !== undefined && page.nErrorsA > 0).length;
-    website.nPagesWithAAError = website.webpages.filter(page => page.nErrorsAA !== undefined && page.nErrorsAA > 0).length;
-    website.nPagesWithAAAError = website.webpages.filter(page => page.nErrorsAAA !== undefined && page.nErrorsAAA > 0).length;
+    const evaluatedWebpages = website.webpages.filter(page => page.pageState === 'Conforme' || page.pageState === 'Não conforme');
+    const totalEvaluatedPages = evaluatedWebpages.length;
 
-    const errorCodes = new Map<string, number>();
-    website.webpages.forEach(page => {
+    website.nPagesWithoutErrors = evaluatedWebpages.filter(page => page.nErrorsA === 0 && page.nErrorsAA === 0 && page.nErrorsAAA === 0).length;
+    website.nPagesWithErrors = evaluatedWebpages.length - website.nPagesWithoutErrors;
+    website.nPagesWithAError = evaluatedWebpages.filter(page => page.nErrorsA !== undefined && page.nErrorsA > 0).length;
+    website.nPagesWithAAError = evaluatedWebpages.filter(page => page.nErrorsAA !== undefined && page.nErrorsAA > 0).length;
+    website.nPagesWithAAAError = evaluatedWebpages.filter(page => page.nErrorsAAA !== undefined && page.nErrorsAAA > 0).length;
+
+    website.pPagesWithoutErrors = (website.nPagesWithoutErrors / totalEvaluatedPages) * 100;
+    website.pPagesWithErrors = (website.nPagesWithErrors / totalEvaluatedPages) * 100;
+    website.pPagesWithAError = (website.nPagesWithAError / totalEvaluatedPages) * 100;
+    website.pPagesWithAAError = (website.nPagesWithAAError / totalEvaluatedPages) * 100;
+    website.pPagesWithAAAError = (website.nPagesWithAAAError / totalEvaluatedPages) * 100;
+
+    const errors = new Map<string, number>();
+    evaluatedWebpages.forEach(page => {
       if (page.errorCodes) {
         page.errorCodes.forEach(code => {
-          if (errorCodes.has(code)) {
-            errorCodes.set(code, errorCodes.get(code) as number + 1);
+          if (errors.has(code)) {
+            errors.set(code, errors.get(code) as number + 1);
           } else {
-            errorCodes.set(code, 1);
+            errors.set(code, 1);
           }
         });
       }
     });
-
-    website.top10Errors = Array.from(errorCodes).sort((a, b) => b[1] - a[1]).slice(0, 10).map(a => a[0]);
+    // const top10Errors = new Map<string, number>();
+    // Array.from(errors.entries())
+    //   .sort((a, b) => b[1] - a[1])
+    //   .slice(0, 10)
+    //   .forEach(([code, frequency]) => top10Errors.set(code, frequency));
+    //
+    // website.top10Errors = top10Errors;
+    website.top10Errors = Array.from(errors.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([key, value]) => ({key, value}));
   }
 
 }

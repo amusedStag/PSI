@@ -10,8 +10,10 @@ import {WebsitePage} from "./websitepage";
 })
 export class WebsiteService {
 
-  private websitesUrl = 'http://localhost:3078/websites'; //replace with appserver url (http://appserver.alunos.di.fc.ul.pt:3078/websites)
-  private websiteUrl = 'http://localhost:3078/website'; // replace with appserver url (http://appserver.alunos.di.fc.ul.pt:3078/website)
+  private websitesUrl = 'http://localhost:3078/websites';
+  //private websitesUrl = 'http://appserver.alunos.di.fc.ul.pt:3078/websites';
+  private websiteUrl = 'http://localhost:3078/website';
+  //private websiteUrl = 'http://appserver.alunos.di.fc.ul.pt:3078/website';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

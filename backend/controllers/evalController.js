@@ -25,19 +25,67 @@ const launchOptions = {
 // criar instância do avaliador
 const qualweb = new QualWeb(plugins);
 
+// exports.website_evaluate = asyncHandler(async (req, res) => {
+//     const websiteId = req.params.id;
+//     const { _id, url }  = req.body;
+//
+//     try {
+//         const webpage = await WebsitePage.findById(_id);
+//         webpage.pageState = "Em avaliação";
+//         await webpage.save();
+//
+//         const website = await Website.findById(websiteId);
+//         website.monitorState = websiteStatus(website);
+//         await website.save();
+//
+//
+//         await qualweb.start(clusterOptions, launchOptions);
+//         const qualwebOptions = {
+//             url: url
+//         };
+//         const report = await qualweb.evaluate(qualwebOptions);
+//         await qualweb.stop();
+//         console.log(report);
+//
+//         const webpage2 = await WebsitePage.findById(_id);
+//         console.log(webpage2);
+//         webpage2.lastEvalDate = new Date();
+//         webpage2.lastEval = report;
+//         webpage2.pageState = pageStatus(webpage, report)
+//         await webpage2.save();
+//
+//         const website2 = await Website.findById(websiteId);
+//         website2.monitorState = websiteStatus(website2);
+//         await website2.save();
+//
+//         res.send(report);
+//     }
+//     catch (err) {
+//         console.error("Error evaluating website:", err);
+//         const webpage3 = await WebsitePage.findById(_id);
+//         webpage3.pageState = "Erro na avaliação";
+//         await webpage3.save();
+//         const website3 = await Website.findById(websiteId);
+//         website3.monitorState = websiteStatus(website3);
+//         await website3.save();
+//         res.status(500).json({ message: "Error evaluating website" });
+//     }
+// });
+
 exports.website_evaluate = asyncHandler(async (req, res) => {
     const websiteId = req.params.id;
     const { _id, url }  = req.body;
 
     try {
-        const webpage = await WebsitePage.findById(_id);
-        webpage.pageState = "Em avaliação";
-        await webpage.save();
+        // Update webpage state to "Em avaliação"
+        await WebsitePage.findByIdAndUpdate(_id, { pageState: "Em avaliação" });
 
-        const website = await Website.findById(websiteId);
+        // Update website monitorState
+        let website = await Website.findById(websiteId).populate('webpages');
+        console.log("first websitestatus");
         website.monitorState = websiteStatus(website);
+        website.lastEvalDate = new Date();
         await website.save();
-
 
         await qualweb.start(clusterOptions, launchOptions);
         const qualwebOptions = {
@@ -47,27 +95,44 @@ exports.website_evaluate = asyncHandler(async (req, res) => {
         await qualweb.stop();
         console.log(report);
 
-        const webpage2 = await WebsitePage.findById(_id);
-        console.log(webpage2);
-        webpage2.lastEvalDate = new Date();
-        webpage2.lastEval = report;
-        webpage2.pageState = pageStatus(webpage, report)
-        await webpage2.save();
+        // Retrieve the webpage document
+        const webpage = await WebsitePage.findById(_id);
 
-        const website2 = await Website.findById(websiteId);
-        website2.monitorState = websiteStatus(website2);
-        await website2.save();
+        // Update webpage with evaluation results
+        const pageState = await pageStatus(webpage, report);
+        //const pageState = pageStatus(webpage, report);
+        //await webpage.save();
+        await WebsitePage.findByIdAndUpdate(_id, {
+            lastEvalDate: new Date(),
+            lastEval: report,
+            pageState: pageState
+        });
+
+        // Fetch the updated website document from the database
+        website = await Website.findById(websiteId).populate('webpages');
+
+        // Update website monitorState again
+        console.log("second websitestatus");
+        website.monitorState = websiteStatus(website);
+        await website.save();
 
         res.send(report);
     }
     catch (err) {
         console.error("Error evaluating website:", err);
-        const webpage3 = await WebsitePage.findById(_id);
-        webpage3.pageState = "Erro na avaliação";
-        await webpage3.save();
-        const website3 = await Website.findById(websiteId);
-        website3.monitorState = websiteStatus(website3);
-        await website3.save();
-        res.status(500).json({ message: "Error evaluating website" });
+
+        // Update webpage state to "Erro na avaliação"
+        await WebsitePage.findByIdAndUpdate(_id, { pageState: "Erro na avaliação" });
+
+        // Fetch the updated website document from the database
+        let website = await Website.findById(websiteId).populate('webpages');
+
+        // Update website monitorState
+        if (website) { // Check if website is defined
+            website.monitorState = websiteStatus(website);
+            await website.save();
+        }
+
+        res.send.status(500).json({ message: "Error evaluating website" }); //????
     }
 });

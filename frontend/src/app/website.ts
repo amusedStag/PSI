@@ -8,12 +8,14 @@ export interface Website {
   monitorState: string;
   webpages: WebsitePage[];
   nPagesWithoutErrors: number;
+  pPagesWithoutErrors: number;
   nPagesWithErrors: number;
+  pPagesWithErrors: number;
   nPagesWithAError: number;
+  pPagesWithAError: number;
   nPagesWithAAError: number;
+  pPagesWithAAError: number;
   nPagesWithAAAError: number;
-  top10Errors: string[];
-  // number of pages without errors
-  // number of pages with each error
-  // top10Errors list / map string number
+  pPagesWithAAAError: number;
+  top10Errors: Array<{key: string, value: number}>;
 }
