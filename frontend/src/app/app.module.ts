@@ -26,6 +26,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ConfirmDialogComponent} from "./confirm-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
+import { WebpageDetailComponent } from './webpage-detail/webpage-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {MatTabsModule} from "@angular/material/tabs";
     WebsiteListComponent,
     MessageComponent,
     WebsiteDetailComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    WebpageDetailComponent
   ],
     imports: [
         BrowserModule,
