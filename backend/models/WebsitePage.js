@@ -37,8 +37,49 @@ const websitePageSchema = new mongoose.Schema({
     errorCodes: {
         type: [String],
         default: []
-    }
-    //nErrorsA number, nErrorsAA number, nErrorsAAA number, errorCodes [String]
+    },
+    nTestsPassed : {
+        type: Number,
+        default: 0
+    },
+    nTestsFailed : {
+        type: Number,
+        default: 0
+    },
+    nTestsWarning : {
+        type: Number,
+        default: 0
+    },
+    nTestsInapplicable : {
+        type: Number,
+        default: 0
+    },
+    tests: [
+        {
+            testName: String,
+            testType: {
+                type: String,
+                enum: ['ACT Rule', 'WCAG Technique'],
+            },
+            testResult: {
+                type: String,
+                enum: ['passed', 'warning', 'failed', 'inapplicable'],
+            },
+            levels: {
+                type: [String],
+                default: []
+            },
+            elements: [
+                {
+                    element: String,
+                    testResult: {
+                        type: String,
+                        enum: ['passed', 'warning', 'failed', 'inapplicable'],
+                    },
+                },
+            ],
+        },
+    ],
 });
 
 const WebsitePage = mongoose.model('WebsitePage', websitePageSchema);

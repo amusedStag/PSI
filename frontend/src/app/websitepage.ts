@@ -12,4 +12,22 @@ export interface WebsitePage {
   nErrorsAA?: number;
   nErrorsAAA?: number;
   errorCodes?: string[];
+  nTestsPassed?: number;
+  pTestsPassed?: number;
+  nTestsFailed?: number;
+  pTestsFailed?: number;
+  nTestsWarning?: number;
+  pTestsWarning?: number;
+  nTestsInapplicable?: number;
+  pTestsInapplicable?: number;
+  tests?: {
+    testName: string;
+    testType: string;
+    testResult: string;
+    levels: string[];
+    elements: {
+      element: string;
+      testResult: string;
+    }[];
+  }[];
 }
