@@ -64,6 +64,8 @@ router.get('/websites', websiteController.website_list);
 
 router.get('/website/:id', websiteController.website_detail);
 
+router.get('/webpage/:id', websiteController.webpage_detail);
+
 router.post('/website', websiteController.website_create_post);
 
 router.put('/website/:id/addpage', websiteController.website_update_pages);

@@ -117,4 +117,19 @@ exports.website_delete_page = asyncHandler(async (req, res) => {
     }
 });
 
+exports.webpage_detail = asyncHandler(async (req, res) => {
+    const webpageId = req.params.id;
+
+    try {
+        const webpage = await WebsitePage.findById(webpageId);
+        if (!webpage) {
+            return res.status(404).json({ message: "Webpage not found" });
+        }
+        res.json(webpage);
+    } catch (err) {
+        console.error("Error fetching webpage details:", err);
+        res.status(500).json({ message: "Error fetching webpage details" });
+    }
+});
+
 

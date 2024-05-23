@@ -44,42 +44,42 @@ function websiteStatus(website) {
 
 async function pageStatus(webpage, report) {
     let url = webpage.url;
+
+    let act_rules = report[url].modules['act-rules']; //ou metadata geral?
+    webpage.nTestsFailed = webpage.nTestsFailed + act_rules.metadata.failed;
+    webpage.nTestsPassed = webpage.nTestsPassed + act_rules.metadata.passed;
+    webpage.nTestsWarning = webpage.nTestsWarning + act_rules.metadata.warning;
+    webpage.nTestsInapplicable = webpage.nTestsInapplicable + act_rules.metadata.inapplicable;
+
+    let wcag_techniques = report[url].modules['wcag-techniques'];
+    webpage.nTestsFailed = webpage.nTestsFailed + wcag_techniques.metadata.failed;
+    webpage.nTestsPassed = webpage.nTestsPassed + wcag_techniques.metadata.passed;
+    webpage.nTestsWarning = webpage.nTestsWarning + wcag_techniques.metadata.warning;
+    webpage.nTestsInapplicable = webpage.nTestsInapplicable + wcag_techniques.metadata.inapplicable;
+
     let act_rules_assertions = report[url].modules['act-rules'].assertions;
     let wcag_assertions = report[url].modules['wcag-techniques'].assertions;
     let hasAorAAerror = false;
 
     for (let act_rule in act_rules_assertions) {
-        //console.log("ACT_RULE IS " + act_rule);
         const rule = act_rules_assertions[act_rule];
-        //console.log("RULE IS " + rule);
         let metadata = rule.metadata;
-        //console.log("METADATA IS " + metadata);
-        // console.log("metadata.failed is " + metadata.failed);
-        // console.log("with type " + typeof metadata.failed);
-        // console.log("isNaN(webpage.nErrorsA): " + isNaN(webpage.nErrorsA));
         let isAorAA = false;
         for (let success of metadata['success-criteria']) {
-            //console.log("SUCCESS IS " + success);
             if (success.level === 'A') {
-                //console.log("in level A if");
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level A if");
                     webpage.nErrorsA = webpage.nErrorsA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
             } else if (success.level === 'AA') {
-                //console.log("in level AA if");
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level AA if");
                     webpage.nErrorsAA = webpage.nErrorsAA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
             } else if (success.level === 'AAA') {
-                //console.log("in level AAA if");
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level AAA if");
                     webpage.nErrorsAAA = webpage.nErrorsAAA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
@@ -90,37 +90,24 @@ async function pageStatus(webpage, report) {
         }
     }
     for (let wcag in wcag_assertions) {
-        //console.log("WCAG IS " + wcag);
         let rule = wcag_assertions[wcag];
-        //console.log("RULE IS " + rule);
         let metadata = rule.metadata;
-        //console.log("METADATA IS " + metadata);
-        //console.log("metadata.failed is " + metadata.failed);
-        //console.log("with type" + typeof metadata.failed);
-
         let isAorAA = false;
         for (let success of metadata['success-criteria']) {
-            //console.log("SUCCESS IS " + success);
             if (success.level === 'A') {
-                //console.log("in level A if");
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level A if");
                     webpage.nErrorsA = webpage.nErrorsA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
             } else if (success.level === 'AA') {
-                //console.log("in level AA if");
                 isAorAA = true;
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level AA if");
                     webpage.nErrorsAA = webpage.nErrorsAA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
             } else if (success.level === 'AAA') {
-                //console.log("in level AAA if");
                 if (metadata.outcome === 'failed') {
-                    //console.log("in failed if in level AAA if");
                     webpage.nErrorsAAA = webpage.nErrorsAAA + metadata.failed;
                     webpage.errorCodes.push(rule.code);
                 }
@@ -129,6 +116,65 @@ async function pageStatus(webpage, report) {
         if (isAorAA && metadata.outcome === 'failed') {
             hasAorAAerror = true;
         }
+    }
+
+    for (let act_rule in act_rules_assertions) {
+        const rule = act_rules_assertions[act_rule];
+        let metadata = rule.metadata;
+
+        let evaluatedElements = [];
+
+        for (let result of rule.results) {
+            let elem = result.elements[0]
+                evaluatedElements.push({
+                element: elem.pointer,
+                testResult: result.verdict,
+            });
+        }
+
+        let conformanceLevels = [];
+        for (let success of metadata['success-criteria']) {
+            conformanceLevels.push(success.level);
+        }
+        // only push if it's not inapplicable?
+        webpage.tests.push({
+            testName: rule.name,
+            testType: 'ACT Rule',
+            testResult: metadata.outcome,
+            levels: conformanceLevels,
+            elements: evaluatedElements,
+        });
+    }
+
+    for (let wcag_rule in wcag_assertions) {
+        const rule = wcag_assertions[wcag_rule];
+        let metadata = rule.metadata;
+
+        let evaluatedElements = [];
+
+        for (let result of rule.results) {
+            if (result.elements && result.elements.length > 0) {
+                let elem = result.elements[0];
+                evaluatedElements.push({
+                    element: elem.pointer,
+                    testResult: result.verdict,
+                });
+            }
+        }
+
+        let conformanceLevels = [];
+        for (let success of metadata['success-criteria']) {
+            conformanceLevels.push(success.level);
+        }
+
+        // only push if it's not inapplicable?
+        webpage.tests.push({
+            testName: rule.name,
+            testType: 'WCAG Technique',
+            testResult: metadata.outcome,
+            levels: conformanceLevels,
+            elements: evaluatedElements,
+        });
     }
 
     await webpage.save();
