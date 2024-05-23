@@ -24,8 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 
-//const mongoDB = "mongodb+srv://dmvenes:mIUMhlHt4FhQf3NU@cluster0.w04rkpv.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0";
-const mongoDB = "mongodb://psi028:psi028@localhost:27017/psi028?retryWrites=true&authSource=psi028";
+const mongoDB = "mongodb+srv://dmvenes:mIUMhlHt4FhQf3NU@cluster0.w04rkpv.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0";
+//const mongoDB = "mongodb://psi028:psi028@localhost:27017/psi028?retryWrites=true&authSource=psi028";
 // Connect to MongoDB
 async function main() {
   await mongoose.connect(mongoDB);
