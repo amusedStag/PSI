@@ -32,7 +32,7 @@ export class WebsiteAddComponent {
     this.websiteForm = this.formBuilder.group({
       //url: ['', [Validators.required, Validators.pattern('^((http|https)://)?www\\.[\\w-]+\\.[a-z]{2,}$')]]
       //url: ['', [Validators.required, Validators.pattern('^((http|https)://)?(?!www\\.)[\\w-]+\\.[a-z]{2,}(/[\\w- ;,./?%&=]*)?$')]]
-      url: ['', [Validators.required, Validators.pattern('^((http|https)://)?(?!www\\.)[\\w-]+\\.[a-z]{2,}(?![/])')]]
+      url: ['', [Validators.required, Validators.pattern('^(http|https)://(?!www.)[a-z-]+(.[a-z-]+)+$')]]
     });
   }
 

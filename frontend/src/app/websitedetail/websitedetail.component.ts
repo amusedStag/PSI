@@ -35,7 +35,7 @@ export class WebsiteDetailComponent implements OnInit {
     url: ['', [
       Validators.required,
       //Validators.pattern('^(http(s)?://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ;,./?%&=]*)?$'),
-      Validators.pattern('^((http|https)://)?(?!www\\.)[\\w-]+\\.[a-z]{2,}(/[\\w- ;,./?%&=]*)?$'),
+      Validators.pattern('^((http|https)://)?(?!www\\.)[a-z-]+(\\.[a-z-]+)+(/.*)?$'),
       this.subpageValidator()
     ]]
   });
