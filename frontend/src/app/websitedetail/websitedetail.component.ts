@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {WebsiteService} from "../website.service";
 import {MessageService} from "../message.service";
 import {Website} from "../website";
@@ -19,7 +19,7 @@ import { descs } from '../descriptions';
 })
 export class WebsiteDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ws: WebsiteService,
-              private ms: MessageService, private fb: FormBuilder, private dg: MatDialog, private lc: Location) { }
+              private ms: MessageService, private fb: FormBuilder, private dg: MatDialog, private lc: Location, private router: Router) { }
 
   @Input() website?: Website;
   displayedColumns: string[] = ['select', 'url', 'lastEvalDate', 'pageState'];
@@ -201,4 +201,7 @@ export class WebsiteDetailComponent implements OnInit {
     return this.descriptions[key];
   }
 
+  navigateToDetails(webpage: WebsitePage) {
+    this.router.navigate(['/webpagedetail', webpage._id]);
+  }
 }

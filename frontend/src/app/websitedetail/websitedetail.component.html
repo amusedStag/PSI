@@ -55,7 +55,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" tabindex="0" (keyup.enter)="navigateToDetails(row)" (click)="navigateToDetails(row)" class="clickable-row"></tr>
     </table>
     <button mat-raised-button color="warn" (click)="deleteSelected()">Delete selected</button>
     <button mat-raised-button color="primary" (click)="evaluateSelected()">Evaluate selected</button>
