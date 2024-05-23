@@ -1,0 +1,79 @@
+<div style="display: flex">
+  <button mat-raised-button (click)="goBack()">Back</button>
+  <div *ngIf="webpage" class="statistics-container">
+    <h2>Test Statistics</h2>
+    <p>Number of Tests Passed: {{webpage.nTestsPassed}} ({{webpage.pTestsPassed | number:'1.0-0'}}%)</p>
+    <p>Number of Tests Failed: {{webpage.nTestsFailed}} ({{webpage.pTestsFailed | number:'1.0-0'}}%)</p>
+    <p>Number of Tests with Warnings: {{webpage.nTestsWarning}} ({{webpage.pTestsWarning | number:'1.0-0'}}%)</p>
+    <p>Number of Inapplicable Tests: {{webpage.nTestsInapplicable}} ({{webpage.pTestsInapplicable | number:'1.0-0'}}%)</p>
+
+<!--    <div>-->
+<!--      <label for="testTypeFilter">Filter by test type:</label>-->
+<!--      <select id="testTypeFilter" [(ngModel)]="testTypeFilter" (change)="applyFilters()">-->
+<!--        <option value=""></option>-->
+<!--        <option value="ACT Rule">ACT Rule</option>-->
+<!--        <option value="WCAG Technique">WCAG Technique</option>-->
+<!--      </select>-->
+
+<!--      <label for="testResultFilter">Filter by test result:</label>-->
+<!--      <select id="testResultFilter" [(ngModel)]="testResultFilter" (change)="applyFilters()">-->
+<!--        <option value=""></option>-->
+<!--        <option value="passed">Passed</option>-->
+<!--        <option value="warning">Warning</option>-->
+<!--        <option value="failed">Failed</option>-->
+<!--        <option value="inapplicable">Inapplicable</option>-->
+<!--      </select>-->
+
+<!--      <label for="conformanceLevelFilter">Filter by level:</label>-->
+<!--      <select id="conformanceLevelFilter" [(ngModel)]="conformanceLevelFilter" (change)="applyFilters()">-->
+<!--        <option value=""></option>-->
+<!--        <option value="A">A</option>-->
+<!--        <option value="AA">AA</option>-->
+<!--        <option value="AAA">AAA</option>-->
+<!--      </select>-->
+<!--    </div>-->
+
+    <mat-form-field>
+      <mat-label>Filter by test type:</mat-label>
+      <mat-select [(value)]="testTypeFilter" (selectionChange)="applyFilters()">
+        <mat-option value=""></mat-option>
+        <mat-option value="ACT Rule">ACT Rule</mat-option>
+        <mat-option value="WCAG Technique">WCAG Technique</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Filter by test result:</mat-label>
+      <mat-select [(value)]="testResultFilter" (selectionChange)="applyFilters()">
+        <mat-option value=""></mat-option>
+        <mat-option value="passed">Passed</mat-option>
+        <mat-option value="warning">Warning</mat-option>
+        <mat-option value="failed">Failed</mat-option>
+        <mat-option value="inapplicable">Inapplicable</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Filter by level:</mat-label>
+      <mat-select [(value)]="conformanceLevelFilter" (selectionChange)="applyFilters()">
+        <mat-option value=""></mat-option>
+        <mat-option value="A">A</mat-option>
+        <mat-option value="AA">AA</mat-option>
+        <mat-option value="AAA">AAA</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h2>Tests</h2>
+    <div *ngFor="let test of webpage.tests" class="test-container">
+      <h3>Name: {{test.testName}}</h3>
+      <p>Type: {{test.testType}}</p>
+      <p>Result: {{test.testResult}}</p>
+      <p>Levels: {{test.levels.join(', ')}}</p>
+      <div *ngIf="test.elements.length > 0"><h4>Elements:</h4></div>
+      <div *ngFor="let element of test.elements" class="elements-list">
+        <h4>Element: {{element.element}}</h4>
+        <p>Test result: {{element.testResult}}</p>
+      </div>
+    </div>
+  </div>
+</div>

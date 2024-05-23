@@ -1,0 +1,28 @@
+.statistics-container {
+  padding: 20px;
+  text-align: left;
+  background-color: #eeeeee;
+  width: 78%;
+  margin: auto;
+  position: relative;
+  top: 10px;
+  border-radius: 10px;
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
+}
+
+button {
+  margin: 20px;
+}
+
+.test-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.elements-list {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+}
