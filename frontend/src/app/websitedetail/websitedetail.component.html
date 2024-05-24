@@ -92,7 +92,7 @@
   </mat-tab>
 
   <mat-tab label="Statistics" [disabled]="!hasConformeOrNonConformePages">
-    <div class="statistics-container">
+    <div class="statistics-container" id="stats">
       <h2>Website Statistics</h2>
       <p>Pages without errors: {{website?.nPagesWithoutErrors}} ({{website?.pPagesWithoutErrors | number:'1.0-0'}}%)</p>
       <p>Pages with errors: {{website?.nPagesWithErrors}} ({{website?.pPagesWithErrors | number:'1.0-0'}}%)</p>
@@ -105,6 +105,9 @@
           <li *ngFor="let error of top10Errors">{{error.key}}: {{error.desc}} - {{error.value}}</li>
         </ng-container>
       </ul>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="generatePDF()">Generate PDF</button>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -9,7 +9,7 @@ const { QualWeb, generateEARLReport } = require('@qualweb/core');
 // definir as diferentes opções a usar
 // plugins para bloquear anúncios e para que não seja detectado que o browser que está a ser usado em modo automático
 const plugins = {
-    adBlock: true, // Default value = false
+    adBlock: false, // Default value = false
     stealth: true // Default value = false
 };
 // o avaliador cria um cluster de páginas em avaliação

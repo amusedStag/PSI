@@ -125,11 +125,13 @@ async function pageStatus(webpage, report) {
         let evaluatedElements = [];
 
         for (let result of rule.results) {
-            let elem = result.elements[0]
+            if (result.elements && result.elements.length > 0) {
+                let elem = result.elements[0];
                 evaluatedElements.push({
-                element: elem.pointer,
-                testResult: result.verdict,
-            });
+                    element: elem.htmlCode,
+                    testResult: result.verdict,
+                });
+            }
         }
 
         let conformanceLevels = [];
@@ -156,7 +158,7 @@ async function pageStatus(webpage, report) {
             if (result.elements && result.elements.length > 0) {
                 let elem = result.elements[0];
                 evaluatedElements.push({
-                    element: elem.pointer,
+                    element: elem.htmlCode,
                     testResult: result.verdict,
                 });
             }

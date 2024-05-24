@@ -11,6 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../confirm-dialog.component";
 import {Location} from "@angular/common";
 import { descs } from '../descriptions';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-websitedetail',
@@ -35,7 +37,8 @@ export class WebsiteDetailComponent implements OnInit {
     url: ['', [
       Validators.required,
       //Validators.pattern('^(http(s)?://)?([\\w-]+\\.)+[\\w-]+(/[\\w- ;,./?%&=]*)?$'),
-      Validators.pattern('^((http|https)://)?(?!www\\.)[a-z-]+(\\.[a-z-]+)+(/.*)?$'),
+      //Validators.pattern('^((http|https)://)?(?!www\\.)[a-z-]+(\\.[a-z-]+)+(/.*)?$'),
+      Validators.pattern('^((http|https)://)[a-z-]+(\\.[a-z-]+)+(/.*)?$'),
       this.subpageValidator()
     ]]
   });
@@ -203,5 +206,24 @@ export class WebsiteDetailComponent implements OnInit {
 
   navigateToDetails(webpage: WebsitePage) {
     this.router.navigate(['/webpagedetail', webpage._id]);
+  }
+
+  generatePDF(): void {
+    const data = document.getElementById('stats');
+    if (data) {
+      html2canvas(data).then(canvas => {
+        const imgWidth = 320;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const contentDataURL = canvas.toDataURL('image/png');
+        let pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.text('URL: ' + this.website?.url, 10, 10);
+        pdf.text('Last Evaluation Date: ' + (this.website?.lastEvalDate ? new Date(this.website?.lastEvalDate).toLocaleDateString() : 'Not evaluated yet'), 10, 20);
+        pdf.addImage(contentDataURL, 'PNG', 0, 30, imgWidth, imgHeight);
+        const filename = this.website?.url + '-statistics.pdf';
+        pdf.save(filename);
+      });
+    } else {
+      console.error('Element with id "stats" not found');
+    }
   }
 }
